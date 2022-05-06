@@ -5,18 +5,24 @@
     :margin="margin"
     :direction="direction"
     :axis="axis"
-    :hideY=true
   >
 
     <template #layers>
-      <Grid strokeDasharray="" :hideY=true />
-      <Area :dataKeys="['name', 'pl']" type="monotone" :areaStyle="{ fill: 'url(#grad)' }" :hideX=true />
+      <Grid strokeDasharray="" :hideY="true" />
+      <Area :dataKeys="['name', 'pl']" type="monotone" :areaStyle="{ fill: 'url(#grad)' }" />
       <Line
         :dataKeys="['name', 'pl']"
         type="monotone"
         :lineStyle="{
-          stroke: '#9f7aea'
+          stroke: lineColor
         }"
+        :dotStyle="
+          {
+            stroke: lineColor,
+            strokeWidth: 2,
+            fill: lineColor
+          }
+        "
       />
       <!-- <Marker :value="1000" label="Mean." color="green" strokeWidth="2" strokeDasharray="6 6" /> -->
       <defs>
@@ -31,7 +37,8 @@
       <Tooltip
         borderColor="#48CAE4"
         :config="{
-          pl: { color: '#9f7aea' },
+          name: { label: 'test-name', color: tooltipColor },
+          pl: { label: 'pl', color: tooltipColor },
           avg: { hide: true },
           inc: { hide: true }
         }"
@@ -43,12 +50,16 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { Chart, Grid, Line } from 'vue3-charts'
+import { Chart, Line, Tooltip } from 'vue3-charts'
+import Grid from '@/components/Grid.vue'
 import { plByMonth } from './data'
+
+const tooltipColor = '#470e63'
+const lineColor = '#470e63'
 
 export default defineComponent({
   name: 'LineChart',
-  components: { Chart, Grid, Line },
+  components: { Chart, Grid, Line, Tooltip },
   setup() {
     const data = ref(plByMonth)
     const direction = ref('horizontal')
@@ -66,17 +77,18 @@ export default defineComponent({
       secondary: {
         domain: ['dataMin', 'dataMax + 100'],
         type: 'linear',
-        ticks: 8
-      }
+        ticks: 8,
+        hide: false
+      },
     })
 
-    return { data, direction, margin, axis }
+    return { data, direction, margin, axis, lineColor, tooltipColor }
   }
 })
 </script>
 
 <style>
 #app {
-  color: #2ecc71
+  color: #470e63
 }
 </style>
