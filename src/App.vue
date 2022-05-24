@@ -5,12 +5,16 @@
     :margin="margin"
     :direction="direction"
     :axis="axis"
-    :hideY=true
+    :hideY="true"
   >
-
     <template #layers>
-      <Grid strokeDasharray="" :hideY=true />
-      <Area :dataKeys="['name', 'pl']" type="monotone" :areaStyle="{ fill: 'url(#grad)' }" :hideX=true />
+      <Grid strokeDasharray="" :hideY="true" />
+      <Area
+        :dataKeys="['name', 'pl']"
+        type="monotone"
+        :areaStyle="{ fill: 'url(#grad)' }"
+        :hideX="true"
+      />
       <Line
         :dataKeys="['name', 'pl']"
         type="monotone"
@@ -18,13 +22,6 @@
           stroke: '#9f7aea'
         }"
       />
-      <!-- <Marker :value="1000" label="Mean." color="green" strokeWidth="2" strokeDasharray="6 6" /> -->
-      <defs>
-        <linearGradient id="grad" gradientTransform="rotate(90)">
-          <stop offset="0%" stop-color="#be90ff" stop-opacity="1" />
-          <stop offset="100%" stop-color="white" stop-opacity="0.4" />
-        </linearGradient>
-      </defs>
     </template>
 
     <template #widgets>
@@ -37,13 +34,13 @@
         }"
       />
     </template>
-
   </Chart>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { Chart, Grid, Line } from 'vue3-charts'
+import { Grid, Line } from 'vue3-charts'
+import Chart from '@/components/chart/Chart.vue'
 import { plByMonth } from './data'
 
 export default defineComponent({
@@ -77,6 +74,6 @@ export default defineComponent({
 
 <style>
 #app {
-  color: #2ecc71
+  color: #2ecc71;
 }
 </style>
